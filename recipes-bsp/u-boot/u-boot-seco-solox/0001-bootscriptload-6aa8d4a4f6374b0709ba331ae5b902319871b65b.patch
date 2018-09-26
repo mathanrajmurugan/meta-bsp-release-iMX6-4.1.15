@@ -1,0 +1,50 @@
+--- u-boot-2015-04-secoboards-imx6.git/mx6seco_common.h	2018-09-05 21:58:28.149859892 +0530
++++ u-boot-2015-04-secoboards-imx6.git/include/configs/mx6seco_common.h	2018-09-06 16:13:57.461869350 +0530
+@@ -69,6 +69,7 @@
+ 
+ #define CONFIG_LOADADDR                0x12000000
+ #define CONFIG_FDT_LOADADDR            0x18000000
++#define CONFIG_BOOTSCRIPT_LOADADDR     0x20000000
+ #define CONFIG_SYS_TEXT_BASE           0x17800000
+ 
+ #define CONFIG_SYS_LOAD_ADDR	       CONFIG_LOADADDR
+@@ -453,6 +454,21 @@
+ 	"kernel_file=zImage\0"                                                                                                              \
+ 	"kernel_load=mmc dev ${kernel_device_id}; fatload mmc ${kernel_device_id}:${kernel_partition} ${kernel_loadaddr} ${kernel_file}\0"
+ 
++#if defined CONFIG_TARGET_MX6SECO_USBC_A62_10
++#define CONFIG_ENV_BOOTSCRIPT                                                                                                               \
++        "bootscript_device_id="__stringify(CONFIG_BOOT_ID_EXT_SD)"\0"                                                                          \
++        "bootscript_partition="__stringify(CONFIG_SYS_MMC_IMG_LOAD_PART)"\0"                                                                    \
++        "bootscript_loadaddr="__stringify(CONFIG_BOOTSCRIPT_LOADADDR)"\0"                                                                                  \
++        "bootscript_file=bootscript-update\0"                                                                                                              \
++        "bootscript_load=mmc dev ${bootscript_device_id}; fatload mmc ${bootscript_device_id}:${bootscript_partition} ${bootscript_loadaddr} ${bootscript_file}\0"
++#else
++#define CONFIG_ENV_BOOTSCRIPT                                                                                                               \
++        "bootscript_device_id="__stringify(CONFIG_BOOT_ID_EXT_SD)"\0"                                                                          \
++        "bootscript_partition="__stringify(CONFIG_SYS_MMC_IMG_LOAD_PART)"\0"                                                                    \
++        "bootscript_loadaddr="__stringify(CONFIG_BOOTSCRIPT_LOADADDR)"\0"                                                                                  \
++        "bootscript_file=bootscript\0"                                                                                                              \
++        "bootscript_load=mmc dev ${bootscript_device_id}; fatload mmc ${bootscript_device_id}:${bootscript_partition} ${bootscript_loadaddr} ${bootscript_file}\0"
++#endif
+ 
+ #define CONFIG_ENV_FDT                                                                                                  \
+ 	"fdt_device_id="__stringify(CONFIG_SYS_MMC_ENV_DEV)"\0"                                                             \
+@@ -487,6 +503,9 @@
+ 	"fi;"                                                           \
+ 	"run root_set_dev; "                                            \
+ 	"run root_add_env; "                                            \
++	"if run bootscript_load ; then"					\
++		" source ${bootscript_loadaddr}; " \
++	"fi; "								\
+ 	"run kernel_load; "                                             \
+ 	"run fdt_load; "                                                \
+ 	"bootz ${kernel_loadaddr} - ${fdt_loadaddr}"
+@@ -497,6 +516,7 @@
+ 	CONFIG_ENV_BOOTARG_BASE                 \
+ 	CONFIG_ENV_KERNEL                       \
+ 	CONFIG_ENV_FDT                          \
++	CONFIG_ENV_BOOTSCRIPT			\
+ 	CONFIG_ENV_ROOT                        	\
+ 	CONFIG_ENV_VIDEO                        \
+ 	"bootcmd=" CONFIG_CMD_SET_BOOT "\0"

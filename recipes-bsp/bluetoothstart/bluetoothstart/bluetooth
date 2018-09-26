@@ -1,0 +1,25 @@
+#! /bin/sh
+
+bluetooth="/usr/lib/bluez5/bluetooth/bluetoothd"
+bluetooth_args=""
+
+test -x "$bluetooth" || exit 0
+
+case "$1" in
+  start)
+    echo -n "Starting bluetooth-sysfs daemon"
+    start-stop-daemon --start --quiet --pidfile /var/run/bluetooth.pid --make-pidfile --exec $bluetooth -- $bluetooth_args & 
+    echo "."
+    ;;
+  stop)
+    echo -n "Stopping bluetooth-sysfs daemon"
+    start-stop-daemon --stop --quiet --pidfile /var/run/bluetooth.pid
+    echo "."
+    ;;
+  *)
+    echo "Usage: /etc/init.d/bluetooth {start|stop}"
+    exit 1
+esac
+
+exit 0
+

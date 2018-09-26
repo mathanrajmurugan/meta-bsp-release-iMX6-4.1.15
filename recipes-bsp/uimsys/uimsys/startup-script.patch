@@ -1,0 +1,11 @@
+--- a/scripts/uim-sysfs	2017-10-13 10:29:29.560651985 +0200
++++ b/scripts/uim-sysfs	2017-10-13 10:29:40.296818553 +0200
+@@ -17,7 +17,7 @@ test -x "$uim" || exit 0
+ case "$1" in
+   start)
+     echo -n "Starting uim-sysfs daemon"
+-    start-stop-daemon --start --quiet --pidfile /var/run/uim.pid --make-pidfile --exec $uim -- $uim_args & 
++    start-stop-daemon --start --quiet --pidfile /var/run/uim.pid --make-pidfile --exec $uim -- $uim_args > /dev/null 2>&1 & 
+     echo "."
+     ;;
+   stop)
