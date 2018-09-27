@@ -13,7 +13,7 @@ LICENSE = "GPLv2+"
 LIC_FILES_CHKSUM = "file://COPYING;md5=d7810fab7487fb0aad327b76f1be7cd7"
 
 SCMVERSION = "n"
-SRC_URI = "git://secogit.seco.com/imx6_release/linux-4-1-15-secoboards-imx6-rel.git;user=betauser:betauser;protocol=https \
+SRC_URI = "git://github.com/mathanrajmurugan/iMX6-kernel-bsp6-a62-928-962-hmi-a75.git;protocol=https \
 file://defconfig_original \
 file://defconfig"
 
