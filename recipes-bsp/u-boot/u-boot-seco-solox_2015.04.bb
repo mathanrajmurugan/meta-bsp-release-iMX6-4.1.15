@@ -15,7 +15,7 @@ LICENSE = "GPLv2+"
 LIC_FILES_CHKSUM = "file://Licenses/README;md5=c7383a594871c03da76b3707929d2919"
 
 SCMVERSION = "n"
-SRC_URI = "git://secogit.seco.com/imx6_release/u-boot-2015-04-secoboards-imx6sx-rel.git;user=betauser:betauser;protocol=https \
+SRC_URI = "git://github.com/mathanrajmurugan/b08-uboot-bsp6.git;protocol=https \
 file://0002-patch-config.patch \ 
 file://0001-bootscriptload-6aa8d4a4f6374b0709ba331ae5b902319871b65b.patch"
 SRCREV = "${AUTOREV}"
